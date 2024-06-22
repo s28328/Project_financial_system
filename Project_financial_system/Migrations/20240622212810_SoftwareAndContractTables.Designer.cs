@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Project_financial_system.Context;
@@ -11,9 +12,11 @@ using Project_financial_system.Context;
 namespace Project_financial_system.Migrations
 {
     [DbContext(typeof(FinancialContext))]
-    partial class FinancialContextModelSnapshot : ModelSnapshot
+    [Migration("20240622212810_SoftwareAndContractTables")]
+    partial class SoftwareAndContractTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -154,11 +157,11 @@ namespace Project_financial_system.Migrations
 
             modelBuilder.Entity("Project_financial_system.Models.Domain.Discount", b =>
                 {
-                    b.Property<int>("IdDiscount")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdDiscount"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("timestamp without time zone");
@@ -174,7 +177,7 @@ namespace Project_financial_system.Migrations
                     b.Property<DateTime?>("StartDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.HasKey("IdDiscount");
+                    b.HasKey("Id");
 
                     b.ToTable("Discount");
                 });

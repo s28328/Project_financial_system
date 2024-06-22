@@ -15,7 +15,10 @@ public abstract class Customer
     public string PhoneNumber { get; set; }
     [Required]
     public int IdAddress { get; set; }
+    
     [ForeignKey(nameof(IdAddress))]
     public Address Address { get; set; }
 
+    public ICollection<Contract> Contracts { get; set; }
+    public ICollection<Payment> Payments { get; set; }
 }
