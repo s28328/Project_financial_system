@@ -14,8 +14,7 @@ public class Contract
     [Required]
     [Range(3, 30, ErrorMessage = "The value must be between 3 and 30.")]
     public int DayInterval { get; set; }
-    [Required]
-    public int IdDiscount { get; set; }
+    public int? IdDiscount { get; set; }
     [Required]
     [MaxLength(100)]
     public string UpdatesInfo { get; set; }
@@ -34,7 +33,7 @@ public class Contract
     public int IdCustomer { get; set; }
     
     [ForeignKey(nameof(IdDiscount))]
-    public Discount Discount { get; set; }
+    public Discount? Discount { get; set; }
     
     [ForeignKey(nameof(IdVersion))]
     public Version Version { get; set; }

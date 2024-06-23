@@ -6,7 +6,7 @@ namespace Project_financial_system.Repositories.Abstraction;
 
 public interface IIndividualCustomerRepository: IBaseRepository
 {
-    void CreateIndividualCustomerAsync(IndividualCustomer individualCustomer,
+    Task CreateIndividualCustomerAsync(IndividualCustomer individualCustomer,
         CancellationToken cancellationToken);
     void RemoveIndividualCustomerAsync(IndividualCustomer customer, int idCustomer,
         CancellationToken cancellationToken);

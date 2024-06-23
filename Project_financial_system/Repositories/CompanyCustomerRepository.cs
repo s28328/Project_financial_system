@@ -13,9 +13,9 @@ public class CompanyCustomerRepository:BaseRepository, ICompanyCustomerRepositor
     {
     }
 
-    public void CreateCompanyCustomerAsync(CompanyCustomer companyCustomer, CancellationToken cancellationToken)
+    public async Task CreateCompanyCustomerAsync(CompanyCustomer companyCustomer, CancellationToken cancellationToken)
     {
-        _context.CompanyCustomers.Add(companyCustomer);
+        await _context.CompanyCustomers.AddAsync(companyCustomer, cancellationToken);
     }
 
     public void UpdateCompanyCustomerAsync(CompanyCustomerDto companyCustomer, CompanyCustomer customer,

@@ -13,9 +13,9 @@ public class IndividualCustomerRepository:BaseRepository, IIndividualCustomerRep
     {
     }
 
-    public void CreateIndividualCustomerAsync(IndividualCustomer individualCustomer, CancellationToken cancellationToken)
+    public async Task CreateIndividualCustomerAsync(IndividualCustomer individualCustomer, CancellationToken cancellationToken)
     {
-        _context.IndividualCustomers.Add(individualCustomer);
+       await _context.IndividualCustomers.AddAsync(individualCustomer, cancellationToken);
     }
 
     public void RemoveIndividualCustomerAsync(IndividualCustomer customer, int idCustomer,

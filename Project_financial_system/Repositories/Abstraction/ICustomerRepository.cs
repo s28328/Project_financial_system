@@ -4,5 +4,7 @@ namespace Project_financial_system.Repositories.Abstraction;
 
 public interface ICustomerRepository: IBaseRepository
 {
-    void CreateCustomerAsync(Customer customer, CancellationToken cancellationToken);
+    Task CreateCustomerAsync(Customer customer, CancellationToken cancellationToken);
+    public Task<bool> HasContract(int idCustomer);
+    public Task<Customer?> GetById(int idCustomer);
 }

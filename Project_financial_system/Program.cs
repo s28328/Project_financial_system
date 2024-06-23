@@ -16,6 +16,10 @@ builder.Services.AddScoped<IAddressRepository, AddressRepository>();
 builder.Services.AddScoped<ICompanyCustomerRepository,CompanyCustomerRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IIndividualCustomerRepository, IndividualCustomerRepository>();
+builder.Services.AddScoped<IContractRepository, ContractRepository>();
+builder.Services.AddScoped<IDiscountRepository,DiscountRepository>();
+builder.Services.AddScoped<IVersionRepository,VersionRepository>();
+builder.Services.AddScoped<IContractService, ContractService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddDbContext<FinancialContext>(
     options => options.UseNpgsql("Host=localhost; Database=financial_system; Username=postgres; Password=admin; Pooling = true;"));

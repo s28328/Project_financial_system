@@ -40,8 +40,8 @@ public class CustomerService:ICustomerService
              IdAddress = addressId,
              IsDeleted = false
          };
-         _customerRepository.CreateCustomerAsync(customer, cancellationToken);
-         _individualCustomerRepository.CreateIndividualCustomerAsync(customer, cancellationToken);
+         await _customerRepository.CreateCustomerAsync(customer, cancellationToken);
+         await _individualCustomerRepository.CreateIndividualCustomerAsync(customer, cancellationToken);
          await _customerRepository.SaveChangesAsync(cancellationToken);
          CreatedIndividualCustomerResponse customerResponse = new CreatedIndividualCustomerResponse()
          {
@@ -72,8 +72,8 @@ public class CustomerService:ICustomerService
             KRS = companyCustomerDto.KRS,
             CompanyName = companyCustomerDto.CompanyName,
         };
-        _customerRepository.CreateCustomerAsync(customer, cancellationToken);
-        _companyCustomerRepository.CreateCompanyCustomerAsync(customer, cancellationToken);
+        await _customerRepository.CreateCustomerAsync(customer, cancellationToken);
+        await _companyCustomerRepository.CreateCompanyCustomerAsync(customer, cancellationToken);
         await _customerRepository.SaveChangesAsync(cancellationToken);
         CreatedCompanyCustomerResponse customerResponse = new CreatedCompanyCustomerResponse()
         {
