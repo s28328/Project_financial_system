@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Project_financial_system.Context;
+using Project_financial_system.Repositories;
+using Project_financial_system.Repositories.Abstraction;
+using Project_financial_system.Services;
+using Project_financial_system.Services.Abstraction;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +11,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();
+builder.Services.AddScoped<IAddressRepository, AddressRepository>();
+builder.Services.AddScoped<ICompanyCustomerRepository,CompanyCustomerRepository>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<IIndividualCustomerRepository, IndividualCustomerRepository>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddDbContext<FinancialContext>(
     options => options.UseNpgsql("Host=localhost; Database=financial_system; Username=postgres; Password=admin; Pooling = true;"));
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
@@ -21,5 +31,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseMiddleware<TransactionMiddleware>();
+app.MapControllers();
 
 app.Run();
