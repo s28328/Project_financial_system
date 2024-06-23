@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Project_financial_system.Context;
@@ -11,9 +12,11 @@ using Project_financial_system.Context;
 namespace Project_financial_system.Migrations
 {
     [DbContext(typeof(FinancialContext))]
-    partial class FinancialContextModelSnapshot : ModelSnapshot
+    [Migration("20240623091728_PESEL_KRS_UNIQUE")]
+    partial class PESEL_KRS_UNIQUE
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

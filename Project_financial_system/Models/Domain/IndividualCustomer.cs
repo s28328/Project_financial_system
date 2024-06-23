@@ -13,6 +13,7 @@ public class IndividualCustomer:Customer
     public string LastName { get; set; }
     [MaxLength(11)]
     [Required]
+    
     public string PESEL { get; set; }
     [Required]
     public bool IsDeleted { get; set; } = false; // Soft delete

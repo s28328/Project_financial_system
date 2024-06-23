@@ -36,5 +36,14 @@ public class FinancialContext:DbContext
             .ToTable("Company_Customer");
         modelBuilder.Entity<IndividualCustomer>()
             .ToTable("Individual_Customer");
+
+        modelBuilder.Entity<IndividualCustomer>(entity =>
+            entity.
+                HasIndex(e => e.PESEL).
+                IsUnique());
+        modelBuilder.Entity<CompanyCustomer>(entity =>
+            entity.
+                HasIndex(e => e.KRS).
+                IsUnique());
     }
 }
