@@ -1,7 +1,3 @@
-using CurrencyDotNet;
-using CurrencyDotNet.Models;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Project_financial_system.Repositories.Abstraction;
 using Project_financial_system.Services.Abstraction;

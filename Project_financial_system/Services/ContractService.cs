@@ -1,5 +1,3 @@
-using CurrencyDotNet;
-using CurrencyDotNet.Models;
 using Project_financial_system.Exceptions;
 using Project_financial_system.Models.Domain;
 using Project_financial_system.Models.Request;
