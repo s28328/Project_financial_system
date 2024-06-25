@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Project_financial_system.Context;
 using Project_financial_system.Models.Domain;
 using Project_financial_system.Models.Request;
@@ -11,25 +12,25 @@ public class ContractRepository:BaseRepository,IContractRepository
     public ContractRepository(FinancialContext context) : base(context)
     {
     }
+    
 
-    public async Task<Contract> CreateContract(RequestContract requestContract, Version version, decimal finalPrice,
-        Discount? discount, CancellationToken cancellationToken)
+    public Task<Contract?> GetContractByIdAsync(int idContract)
     {
-        Contract contract = new Contract()
-        {
-            StartDate = requestContract.StartDate,
-            EndDate = requestContract.EndDate,
-            Price = finalPrice,
-            AmountPaid = 0,
-            DayInterval = requestContract.DayInterval,
-            IdDiscount = discount.IdDiscount,
-            IdVersion = version.IdVersion,
-            IsSigned = false,
-            UpdatesInfo = requestContract.UpdatesInfo,
-            YearsOfSupport = requestContract.YearsOfSupport,
-            IdCustomer = requestContract.IdCustomer
-        };
+        return _context.Contracts.FirstOrDefaultAsync(contract => contract.IdContract == idContract);
+    }
+
+    public async Task<Contract> AddContract(Contract contract, CancellationToken cancellationToken)
+    {
         await _context.Contracts.AddAsync(contract, cancellationToken);
         return contract;
+        
+    }
+
+    public async Task<List<Contract>> GetActiveContractsForCustomerById(int idCustomer)
+    {
+        var contracts = await _context.Contracts.
+            Where(contract => contract.IdCustomer == idCustomer).
+            Where(contract => contract.IsSigned == false && contract.IsTerminated ==false).ToListAsync();
+        return contracts;
     }
 }

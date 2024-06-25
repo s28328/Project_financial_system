@@ -7,6 +7,7 @@ namespace Project_financial_system.Repositories.Abstraction;
 
 public interface IContractRepository:IBaseRepository
 {
-    public Task<Contract> CreateContract(RequestContract requestContract, Version version, decimal finalPrice, Discount? discount,
-        CancellationToken cancellationToken);
+    public Task<Contract?> GetContractByIdAsync(int idContract);
+    Task<Contract> AddContract(Contract contract, CancellationToken cancellationToken);
+    public Task<List<Contract>> GetActiveContractsForCustomerById(int idCustomer);
 }

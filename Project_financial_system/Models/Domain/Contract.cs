@@ -20,6 +20,8 @@ public class Contract
     public string UpdatesInfo { get; set; }
     [Required]
     public bool IsSigned { get; set; }
+    [Required] 
+    public bool IsTerminated { get; set; }
     [Required]
     public decimal AmountPaid { get; set; }
     [Required]

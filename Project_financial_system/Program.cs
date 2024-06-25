@@ -19,6 +19,7 @@ builder.Services.AddScoped<IIndividualCustomerRepository, IndividualCustomerRepo
 builder.Services.AddScoped<IContractRepository, ContractRepository>();
 builder.Services.AddScoped<IDiscountRepository,DiscountRepository>();
 builder.Services.AddScoped<IVersionRepository,VersionRepository>();
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IContractService, ContractService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddDbContext<FinancialContext>(

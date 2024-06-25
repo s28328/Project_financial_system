@@ -21,5 +21,11 @@ public class ContractController:ControllerBase
     {
         return StatusCode(201, await _contractService.CreateContract(contract, cancellationToken));
     }
-    
+
+    [HttpPost]
+    [Route("/{idContract:int}/payment")]
+    public async Task<IActionResult> PayContract(RequestPayment payment, int idContract, CancellationToken cancellationToken)
+    {
+        return StatusCode(201, await _contractService.PayContract(payment,idContract, cancellationToken));
+    }
 }
