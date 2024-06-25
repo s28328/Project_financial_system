@@ -30,6 +30,7 @@ public class AppUserService:IAppUserService
         {
             Email = model.Email,
             Login = model.Login,
+            Role = model.Role,
             Password = hashedPasswordAndSalt.Item1,
             Salt = hashedPasswordAndSalt.Item2,
             RefreshToken = SecurityHelpers.GenerateRefreshToken(),

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Net;
 using Project_financial_system.Context;
 
 public class TransactionMiddleware
@@ -15,22 +16,34 @@ public class TransactionMiddleware
 
     public async Task InvokeAsync(HttpContext context, FinancialContext dbContext)
     {
-        // Begin the transaction
         using var transaction = await dbContext.Database.BeginTransactionAsync();
 
         try
         {
-            // Call the next middleware in the pipeline
             await _next(context);
 
-            // Commit the transaction if no exceptions occurred
             await transaction.CommitAsync();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // Roll back the transaction if an exception occurred
             await transaction.RollbackAsync();
-            throw; // Re-throw the exception after rolling back the transaction
+            await HandleException(context, ex);
         }
+    }
+    
+    private Task HandleException(HttpContext context, Exception exception)
+    {
+        context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+        context.Response.ContentType = "application/json";
+        var response = new
+        {
+            error = new
+            {
+                message = "An error occured while processing your request.",
+                detail = exception.Message
+            }
+        };
+        var jsonResponse = System.Text.Json.JsonSerializer.Serialize(response);
+        return context.Response.WriteAsync(jsonResponse);
     }
 }
