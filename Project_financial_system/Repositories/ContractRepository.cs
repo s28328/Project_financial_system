@@ -14,9 +14,9 @@ public class ContractRepository:BaseRepository,IContractRepository
     }
     
 
-    public Task<Contract?> GetContractByIdAsync(int idContract)
+    public Task<Contract?> GetContractByIdAsync(int idContract,CancellationToken cancellationToken)
     {
-        return _context.Contracts.FirstOrDefaultAsync(contract => contract.IdContract == idContract);
+        return _context.Contracts.FirstOrDefaultAsync(contract => contract.IdContract == idContract, cancellationToken: cancellationToken);
     }
 
     public async Task<Contract> AddContract(Contract contract, CancellationToken cancellationToken)
@@ -26,11 +26,35 @@ public class ContractRepository:BaseRepository,IContractRepository
         
     }
 
-    public async Task<List<Contract>> GetActiveContractsForCustomerById(int idCustomer)
+    public async Task<List<Contract>> GetActiveContractsForCustomerById(int idCustomer,CancellationToken cancellationToken)
     {
         var contracts = await _context.Contracts.
             Where(contract => contract.IdCustomer == idCustomer).
-            Where(contract => contract.IsSigned == false && contract.IsTerminated ==false).ToListAsync();
+            Where(contract => contract.IsSigned == false && contract.IsTerminated ==false).ToListAsync( cancellationToken);
         return contracts;
+    }
+
+    public async Task<List<Contract>> GetSignedContracts(CancellationToken cancellationToken)
+    {
+        return await _context.Contracts.Where(contract => contract.IsSigned == true).ToListAsync( cancellationToken);
+    }
+
+    public async Task<List<Contract>> GetSignedContractsBySoftware(string software,CancellationToken cancellationToken)
+    {
+        return await _context.Contracts.
+            Where(contract => contract.IsSigned == true).
+            Where(contract => contract.Version.Software.Name == software ).ToListAsync(cancellationToken);
+    }
+
+    public async Task<List<Contract>> GetActiveContracts(CancellationToken cancellationToken)
+    {
+        return await _context.Contracts.Where(contract => contract.IsTerminated == false).ToListAsync(cancellationToken);
+    }
+
+    public async Task<List<Contract>> GetActiveContractsBySoftware(string software, CancellationToken cancellationToken)
+    {
+        return await _context.Contracts.
+            Where(contract => contract.IsTerminated == false).
+            Where(contract => contract.Version.Software.Name == software ).ToListAsync(cancellationToken);
     }
 }

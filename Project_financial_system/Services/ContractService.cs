@@ -32,7 +32,7 @@ public class ContractService : IContractService
 
     public async Task<object> CreateContract(RequestContract requestContract, CancellationToken cancellationToken)
     {
-        await HasActiveContractForVersion(requestContract.IdCustomer, requestContract.IdVersion);
+        await HasActiveContractForVersion(requestContract.IdCustomer, requestContract.IdVersion, cancellationToken);
         var discount = await GetBestDiscount(requestContract.StartDate, requestContract.DayInterval,
             requestContract.IdCustomer, cancellationToken);
         var version =
@@ -82,7 +82,7 @@ public class ContractService : IContractService
     public async Task<object?> PayContract(RequestPayment requestPayment, int idContract,
         CancellationToken cancellationToken)
     {
-        var contract = await _contractRepository.GetContractByIdAsync(idContract);
+        var contract = await _contractRepository.GetContractByIdAsync(idContract,cancellationToken);
         ExistsContract(contract);
         IsActiveUnpaidContract(contract);
         var dateOfPayment = DateTime.Today;
@@ -93,9 +93,9 @@ public class ContractService : IContractService
         return await RemakeContract(contract, dateOfPayment, requestPayment.Quota, cancellationToken);
     }
 
-    private async Task HasActiveContractForVersion(int idCustomer, int idVersion)
+    private async Task HasActiveContractForVersion(int idCustomer, int idVersion,CancellationToken cancellationToken)
     {
-        var contracts = await _contractRepository.GetActiveContractsForCustomerById(idCustomer);
+        var contracts = await _contractRepository.GetActiveContractsForCustomerById(idCustomer,cancellationToken);
         if (contracts.Any(contract => contract.IdVersion == idVersion))
         {
             throw new DomainException("Customer already has contract for this version.");

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Project_financial_system.Models.Domain;
 using Project_financial_system.Models.Request;
@@ -15,13 +16,13 @@ public class ContractController:ControllerBase
     {
         _contractService = contractService;
     }
-
+    [Authorize(Roles = "user,admin")]
     [HttpPost]
     public async Task<IActionResult> CreateContract(RequestContract contract,CancellationToken cancellationToken)
     {
         return StatusCode(201, await _contractService.CreateContract(contract, cancellationToken));
     }
-
+    [Authorize(Roles = "user,admin")]
     [HttpPost]
     [Route("/{idContract:int}/payment")]
     public async Task<IActionResult> PayContract(RequestPayment payment, int idContract, CancellationToken cancellationToken)
